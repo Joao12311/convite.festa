@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Convite de Aniversário</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background-color: #0e1a2b;
+      color: #f3e6ca;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      margin-top: 20px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+
+    .icon {
+      width: 60px;
+      margin: 20px;
+    }
+
+    .info {
+      margin: 30px 0;
+      font-size: 1.2rem;
+    }
+
+    button {
+      background-color: #ff7043;
+      color: #fff;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 10px;
+      margin: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #f4511e;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1rem;
+      margin-top: 20px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    #confirmados {
+      margin-top: 30px;
+      font-size: 1rem;
+    }
+
+    .logo {
+      width: 120px;
+      margin-top: 10px;
+    }
+
+    .aviso {
+      margin-top: 20px;
+      font-style: italic;
+      color: #ffb84d;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .icon {
+        width: 40px;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Você está convidado para o nosso aniversário!</h1>
+
+  <h2>João Marcelo 🎮<br>David Gabriel 🚀</h2>
+
+  <div class="info">
+    <p>📅 17 de julho de 2025<br>🕕 às 18h<br>📍 Shopping Tacaruna - Game Station</p>
+    <img class="logo" src="https://upload.wikimedia.org/wikipedia/pt/thumb/f/f5/Game_Station_logo.svg/2560px-Game_Station_logo.svg.png" alt="Logo Game Station">
+  </div>
+
+  <input type="text" id="nomeInput" placeholder="Digite seu nome para confirmar">
+  <br>
+  <button onclick="confirmarPresenca()">Confirmar Presença</button>
+  <button onclick="irParaLocal()">Ver Localização 📍</button>
+
+  <div class="aviso">🚫 Convidado não convida!</div>
+
+  <div id="confirmados">
+    <h3>Confirmados:</h3>
+    <ul id="listaConfirmados"></ul>
+  </div>
+
+  <script>
+    // Carrega confirmados do armazenamento local
+    const lista = document.getElementById("listaConfirmados");
+    const nomesSalvos = JSON.parse(localStorage.getItem("confirmados")) || [];
+
+    function atualizarLista() {
+      lista.innerHTML = "";
+      nomesSalvos.forEach(nome => {
+        const li = document.createElement("li");
+        li.textContent = nome;
+        lista.appendChild(li);
+      });
+    }
+
+    function confirmarPresenca() {
+      const nome = document.getElementById("nomeInput").value.trim();
+      if (nome) {
+        nomesSalvos.push(nome);
+        localStorage.setItem("confirmados", JSON.stringify(nomesSalvos));
+        atualizarLista();
+        document.getElementById("nomeInput").value = "";
+        alert("Presença confirmada!");
+      } else {
+        alert("Por favor, digite seu nome.");
+      }
+    }
+
+    function irParaLocal() {
+      window.open("https://www.google.com/maps/place/Game+Station+-+Shopping+Tacaruna+-+Av.+Gov.+Agamenon+Magalh%C3%A3es,+153+-+Santo+Amaro,+Recife+-+PE,+50110-900/@-8.0379884,-34.8732487,16z", "_blank");
+    }
+
+    atualizarLista();
+  </script>
+</body>
+</html>
